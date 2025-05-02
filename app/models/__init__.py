@@ -54,7 +54,7 @@ class Game(db.Model):
     player_1_id = db.Column(db.Integer, db.ForeignKey('client.id'), nullable=False)
     player_2_id = db.Column(db.Integer, db.ForeignKey('client.id'), nullable=True)
     winner_id = db.Column(db.Integer, db.ForeignKey('client.id'), nullable=True)
-    status = db.Column(db.String(20), default='waiting')  # waiting, active, finished
+    status = db.Column(db.String(20), default='waiting')
     categories = db.Column(db.String(200), nullable=False)
     total_time = db.Column(db.Integer, default=0)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
@@ -69,7 +69,7 @@ class GameStats(db.Model):
     correct_answers = db.Column(db.Integer, default=0)
     wrong_answers = db.Column(db.Integer, default=0)
     time_played = db.Column(db.Integer, default=0)
-    result = db.Column(db.String(10))  # win, lose, draw
+    result = db.Column(db.String(10))
 
 class Question(db.Model):
     id = db.Column(db.Integer, primary_key=True)
