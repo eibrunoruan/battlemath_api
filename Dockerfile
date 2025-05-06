@@ -12,5 +12,4 @@ COPY . .
 
 EXPOSE 5000
 
-# ← só UMA linha, com flags que o Gunicorn oficial entende
 CMD ["gunicorn", "-k", "eventlet", "-w", "1", "-b", "0.0.0.0:5000", "run:app"]
