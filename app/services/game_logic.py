@@ -26,7 +26,6 @@ def generate_question(categories: List[str]) -> Optional[dict]:
         }
     }
 
-
 def validate_answer(question_id: int, selected_option: str) -> bool:
     question = Question.query.get(question_id)
     if not question:
@@ -35,10 +34,10 @@ def validate_answer(question_id: int, selected_option: str) -> bool:
 
 _POINTS = {'win': 31, 'lose': -21, 'draw': 10}
 
-
 def apply_points(player: Client, result: str) -> None:
-    player.points += _POINTS.get(result, 0)
-
+    delta = _POINTS.get(result, 0)
+    new_total = player.points + delta
+    player.points = new_total if new_total > 0 else 0
 
 def finalize_game(
     game: Game,
@@ -55,8 +54,10 @@ def finalize_game(
     if winner_id:
         game.winner_id = winner_id
     elif loser_id:
-        game.winner_id = next((s['player_id'] for s in stats_list
-                               if s['player_id'] != loser_id), None)
+        game.winner_id = next(
+            (s['player_id'] for s in stats_list if s['player_id'] != loser_id),
+            None
+        )
 
     for s in stats_list:
         gs = GameStats(

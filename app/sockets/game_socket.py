@@ -9,19 +9,15 @@ r = redis.from_url(os.getenv('REDIS_URL', 'redis://localhost:6379/0'))
 sid_to_user = {}
 TIMEOUT_LIMIT = 25
 
-
 def _room_key(game_id):
     return f'room:{game_id}'
-
 
 def _get_room(game_id):
     data = r.get(_room_key(game_id))
     return json.loads(data) if data else None
 
-
-def _save_room(game_id, room):   # persist room dict
+def _save_room(game_id, room):
     r.setex(_room_key(game_id), 3600, json.dumps(room))
-
 
 class GameNamespace(Namespace):
     def on_connect(self):

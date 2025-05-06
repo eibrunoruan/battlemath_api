@@ -3,7 +3,11 @@ from flask_migrate import Migrate
 from flask_socketio import SocketIO
 from config import Config
 from app.db import db
+
+# importe cada um:
 from app.auth import auth_bp
+from app.routes.game import bp as game_bp
+from app.routes.clients import bp as clients_bp
 
 migrate = Migrate()
 socketio = SocketIO(cors_allowed_origins="*")
@@ -16,9 +20,9 @@ def create_app(config_class=Config):
     migrate.init_app(app, db)
     socketio.init_app(app)
 
-    from app.routes import bp as routes_bp
-    app.register_blueprint(routes_bp)
     app.register_blueprint(auth_bp)
+    app.register_blueprint(game_bp)
+    app.register_blueprint(clients_bp)
 
     @app.errorhandler(400)
     def bad_request(error):
