@@ -121,4 +121,13 @@ def register_client():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
+@bp.route('/clients/<int:id>/badges', methods=['GET'])
+@token_required
+def get_client_badges(current_user, id):
+    if current_user.id != id and not current_user.is_admin:
+        return jsonify({'error': 'Access denied'}), 403
+
+    client = Client.query.get_or_404(id)
+    return jsonify([badge.to_dict() for badge in client.badges]), 200
+
 

@@ -3,6 +3,7 @@ from typing import List, Dict, Optional
 from sqlalchemy.sql import func
 from app import db
 from app.models import Question, Game, GameStats, Client
+from app.services.badge_service import apply_badge_rules
 
 def generate_question(categories: List[str]) -> Optional[dict]:
     question = (
@@ -72,5 +73,6 @@ def finalize_game(
 
         player = Client.query.get(s['player_id'])
         apply_points(player, s['result'])
+        apply_badge_rules(player, s)
 
     db.session.commit()

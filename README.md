@@ -6,14 +6,8 @@ Este projeto implementa uma API REST e WebSocket para um jogo de perguntas e res
 
 * **Python 3.12**
 * **Flask 3.1.0**: microframework web para construir a API REST.
-* **Flask-SocketIO 5.5.1**: comunicação em tempo real com WebSockets.
 * **SQLAlchemy 2.0** + **Flask-SQLAlchemy 3.1.1**: ORM para interagir com o banco.
-* **Flask-Migrate 4.1.0** (Alembic): migrações de esquema do banco.
-* **Redis 7**: armazenamento de estado dos jogos em tempo real.
 * **PostgreSQL**: banco de dados relacional (via Supabase).
-* **Gunicorn 23.0.0** + **eventlet 0.39.1**: servidor WSGI para produção.
-* **Docker**: containerização.
-* **PyJWT**: geração e validação de tokens JWT.
 
 ---
 
@@ -27,23 +21,14 @@ REDIS_URL=redis://redis:6379/0
 SECRET_KEY=sua_chave_secreta_aqui
 ```
 
-No `docker-compose.yml`, inclua:
+No `.env`, inclua:
 
 ```yaml
-env_file:
-  - .env
-environment:
-  - DATABASE_URL
-  - REDIS_URL
-  - SECRET_KEY
+
+  DATABASE_URL='URL do Database'
+  SECRET_KEY='Sua-chave-Secreta'
 ```
 
-Para subir os containers:
-
-```bash
-docker compose down
- docker compose up -d --build
-```
 
 ---
 
